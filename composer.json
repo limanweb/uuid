@@ -18,7 +18,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Limanweb\\Support\\" : "src"
+			"Limanweb\\Uuid\\" : "src"
 		}
 	},
 	"minimum-stability" : "dev"
