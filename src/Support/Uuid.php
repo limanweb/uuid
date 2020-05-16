@@ -1,6 +1,6 @@
 <?php 
 
-namespace Limanweb\Support;
+namespace Limanweb\Uuid\Support;
 
 use Carbon\Carbon;
 

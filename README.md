@@ -26,7 +26,7 @@ Run command to install a package into you project
 
 	composer require limanweb/uuid
 
-## Common Functions
+## Using Functions
 
 ### genUuid()
 
@@ -45,9 +45,9 @@ Returns UUID string.
 
 Example:
 
-	$uuid = \Limanweb\Support\Uuid::genUuid(256, 15);
+	$uuid = \Limanweb\Uuid\Support\Uuid::genUuid(256, 15);
 	
-	echo $uuid; // '5ec004c4-0db2-0010-0100-a08cc1dd9a2b'
+	echo $uuid; // "5ec004c4-0db2-0010-0100-a08cc1dd9a2b"
 
 
 ### getUuidTimestamp()
@@ -66,4 +66,20 @@ Params:
   * `DateTime` to get timestamp as \DateTime object;
   * date format string used for `format()` to get timestamp as formatted string. For example: `'Y-m-d H:i:s.u'`
 
+Example:
+
+	$uuid = "5ec004c4-0db2-0010-0100-a08cc1dd9a2b";
+
+	$ts = \Limanweb\Uuid\Support\Uuid::getUuidTimestamp($uuid, "Y-m-d H:i:s.u");
 	
+	echo $ts; // "2020-05-16 18:20:36.056096"	
+
+## Using trait UsesUuid
+
+Just only add 
+
+	use \Limanweb\Uuid\Models\Concerns\UsesUuids;
+	
+trait use declaration into models where primary key is UUID.  
+
+This trait overrides `getIncrementing()` and `getKeyType()` methods and registered initialisation primary key in `creating` event.
