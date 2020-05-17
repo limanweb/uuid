@@ -10,11 +10,11 @@ There used custom algorithm to generate UUID with next structure:
 
 	SSSSSSSS-UUUU-UAAA-EEEE-RRRRRRRRRRRR
 
- - `S` - 8 hex digits with seconds value of UUID generating timestamp
- - `U` - 5 hex digits with microseconds value of UUID generating timestamp
- - `A` - 3 hex digits with custom application code
- - `E` - 4 hex digits with custom entity code
- - `R` - 12 hex digits whith random value
+ - `S` - 8 hex digits is seconds value of UUID generating timestamp
+ - `U` - 5 hex digits is microseconds value of UUID generating timestamp
+ - `A` - 3 hex digits is custom application code
+ - `E` - 4 hex digits is custom entity code
+ - `R` - 12 hex digits is random value
 
 ### What is entity and application codes?
 
@@ -38,8 +38,8 @@ Returns UUID-string.
 
 Params:
 
-* `$entityCode` - custom integer code of entity (is 0 by default)
-* `$appCode` - custom integer code of application (is 0 by default)
+* `$entityCode` - custom integer code of entity (is 0 by default). Max value is 65535
+* `$appCode` - custom integer code of application (is 0 by default). Max value is 4095
 
 Returns UUID string.
 
@@ -76,10 +76,24 @@ Example:
 
 ## Using trait UsesUuid
 
-Just only add 
+1. Add trait `\Limanweb\Uuid\Models\Concerns\UsesUuids` use declaration into models where primary key is UUID.  
 
-	use \Limanweb\Uuid\Models\Concerns\UsesUuids;
-	
-trait use declaration into models where primary key is UUID.  
+This trait overrides `getIncrementing()` and `getKeyType()` methods therefore you don't need to define properties `$incrementing` and `$keyType`. 
 
-This trait overrides `getIncrementing()` and `getKeyType()` methods and registered initialisation primary key in `creating` event.
+2. You can define $appCode and $entityCode protected properties in your model to generate model UUID-key with specific segments.
+
+Example:
+
+	class MyModel extends Model
+	{
+		use \Limanweb\Uuid\Models\Concerns\UsesUuids;
+		
+		protected $appCode = 16;	// 010
+		protected $entityCode = 256;	// 0100
+		
+		...
+		
+All IDs generated for this model will match the pattern `########-####-#010-0100-############`.
+
+
+
