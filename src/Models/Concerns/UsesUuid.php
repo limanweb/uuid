@@ -10,13 +10,13 @@ use Limanweb\Uuid\Support\Uuid as CustomUuid;
 trait UsesUuid
 {
     /**
-     * 
+     * Registering handler for "creating" event. 
      */
     protected static function bootUsesUuid()
     {
         static::creating(function ($model) {
             if (! $model->getKey()) {
-                $model->{$model->getKeyName()} = CustomUuid::genUuid($model->entityCode, $model->appCode);
+                $model->{$model->getKeyName()} = CustomUuid::genUuid($model->getEntityCode(), $model->getAppCode());
             }
         });
     }
@@ -38,4 +38,25 @@ trait UsesUuid
     {
         return 'string';
     }
+    
+    /**
+     * Retrieves model application code
+     * 
+     * @return integer
+     */
+    public function getAppCode()
+    {
+        return $this->appCode;
+    }
+    
+    /**
+     * Retrieves model entity code
+     * 
+     * @return integer
+     */
+    public function getEntityCode()
+    {
+        return $this->entityCode;
+    }
+
 }
