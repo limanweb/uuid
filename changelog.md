@@ -1,6 +1,6 @@
 # Changelog for limanweb/uuid
 
-## 1.1 (2020-05-17)
+## 1.0.1 (2020-05-17)
 
 Readme updated
 
